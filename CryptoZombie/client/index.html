@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CryptoZombies front-end</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-push-2">
+          <h1 class="text-center">CryptoZombies</h1>
+          <h6 id="userAccount" class="text-center"></h6>
+          <hr />
+          <br />
+          <div class="d-flex justify-content-center">
+            <input id="name" type="text" placeholder="zombie's name"/>
+            <button class="btn btn-create">Create New Zombie</button>
+          </div>
+          <br />
+          <div class="d-flex justify-content-center">
+            <input id="zombie-id" type="text" placeholder="zombie's id"/>
+            <button class="btn btn-levelup">Level Up Zombie</button>
+          </div>
+        </div>
+      </div>
+      <div id="txStatus"></div>
+      <div id="zombies"></div>
+    </div>
+    <script
+      language="javascript"
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+    ></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script
+      language="javascript"
+      type="text/javascript"
+      src="js/web3.min.js"
+    ></script>
+    <script
+      language="javascript"
+      type="text/javascript"
+      src="/js/truffle-contract.js"
+    ></script>
+    <script language="javascript" type="text/javascript" src="js/app.js"></script>
+  </body>
+</html>
