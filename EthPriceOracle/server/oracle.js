@@ -91,12 +91,16 @@ async function init() {
   const oracleContract = await getOracleContract(web3js);
   filterEvents(oracleContract, web3js);
   console.log("Oracle init!");
-  return { oracleContract, ownerAddress };
+  return { oracleContract, ownerAddress, web3js };
 }
 
 (async () => {
-  const { oracleContract, ownerAddress } = await init();
-  //oracleContract.methods.addOracle(ownerAddress).send({ from: ownerAddress, gas: 3000000 });
+  const { oracleContract, ownerAddress, web3js } = await init();
+  // const oracleRole = web3js.utils.asciiToHex("ORACLE");
+  // const result = await oracleContract.methods.hasRole(oracleRole, ownerAddress).call({ from: ownerAddress });
+  // if (result == false) {
+  //   oracleContract.methods.addOracle(ownerAddress).send({ from: ownerAddress, gas: 3000000 });
+  // }
   await oracleContract.methods.setThreshold(1).send({ from: ownerAddress, gas: 3000000 });
   process.on("SIGINT", () => {
     console.log("Calling client.disconnect()");
