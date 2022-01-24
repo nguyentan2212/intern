@@ -1,10 +1,9 @@
-const HDWalletProvider = require("truffle-hdwallet-provider");
 require('dotenv').config();
+const HDWalletProvider = require("truffle-hdwallet-provider");
 
-const MNEMONIC = "prepare tomorrow dinosaur edge topple creek honey safe cover large rate across";
-const API_KEY = "421a33358aa84cae80bbdce80b14854e";
+const MNEMONIC = process.env.MNEMONIC;
+const API = process.env.API;
 
-console.log(process.env.MNEMONIC);
 module.exports = {
   contracts_build_directory: "./client/contracts",
   networks: {
@@ -15,10 +14,10 @@ module.exports = {
     },
     ropsten: {
       provider: function () {
-        return new HDWalletProvider(MNEMONIC, "https://ropsten.infura.io/v3/" + API_KEY);
+        return new HDWalletProvider(MNEMONIC, API);
       },
       network_id: 3,
-      gas: 8000000 //make sure this gas allocation isn't over 4M, which is the max
+      gas: 4000000
     }
   },
 
