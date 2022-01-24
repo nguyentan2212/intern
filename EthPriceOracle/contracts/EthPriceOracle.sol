@@ -33,6 +33,7 @@ contract EthPriceOracle is AccessControlEnumerable {
 
     constructor(address _owner) {
         _setupRole(OWNER, _owner);
+        _setupRole(ORACLE, _owner);
         _setRoleAdmin(ORACLE, OWNER);
     }
 

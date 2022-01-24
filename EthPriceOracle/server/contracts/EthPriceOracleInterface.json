@@ -15,7 +15,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.11+commit.d7f03943\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getLatestEthPrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/E/LamViec/STECH_Corp/Intership/EthPriceOracle/oracle/contracts/EthPriceOracleInterface.sol\":\"EthPriceOracleInterface\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/E/LamViec/STECH_Corp/Intership/EthPriceOracle/oracle/contracts/EthPriceOracleInterface.sol\":{\"keccak256\":\"0x0f9ea3d034346cd64db5c5077635c84649d58780b016785fdec1f9225446f177\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://13876dac7dfb3e28b7d52ef4397bcdb00d68c02410976470f42880296b66f5c6\",\"dweb:/ipfs/QmafGKUHPmaeVqLUrHzqQ3a3icUBzNXTZSdCCKs11j873t\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.11+commit.d7f03943\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getLatestEthPrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/E/LamViec/STECH_Corp/Intership/ethpriceoracle/contracts/EthPriceOracleInterface.sol\":\"EthPriceOracleInterface\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/E/LamViec/STECH_Corp/Intership/ethpriceoracle/contracts/EthPriceOracleInterface.sol\":{\"keccak256\":\"0x0f9ea3d034346cd64db5c5077635c84649d58780b016785fdec1f9225446f177\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://13876dac7dfb3e28b7d52ef4397bcdb00d68c02410976470f42880296b66f5c6\",\"dweb:/ipfs/QmafGKUHPmaeVqLUrHzqQ3a3icUBzNXTZSdCCKs11j873t\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -24,9 +24,9 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.4.22 <0.9.0;\r\n\r\ninterface EthPriceOracleInterface {\r\n  function getLatestEthPrice() external returns (uint256);\r\n}\r\n",
-  "sourcePath": "E:/LamViec/STECH_Corp/Intership/EthPriceOracle/oracle/contracts/EthPriceOracleInterface.sol",
+  "sourcePath": "E:/LamViec/STECH_Corp/Intership/ethpriceoracle/contracts/EthPriceOracleInterface.sol",
   "ast": {
-    "absolutePath": "/E/LamViec/STECH_Corp/Intership/EthPriceOracle/oracle/contracts/EthPriceOracleInterface.sol",
+    "absolutePath": "/E/LamViec/STECH_Corp/Intership/ethpriceoracle/contracts/EthPriceOracleInterface.sol",
     "exportedSymbols": {
       "EthPriceOracleInterface": [
         17
@@ -129,7 +129,7 @@
     "src": "33:136:1"
   },
   "legacyAST": {
-    "absolutePath": "/E/LamViec/STECH_Corp/Intership/EthPriceOracle/oracle/contracts/EthPriceOracleInterface.sol",
+    "absolutePath": "/E/LamViec/STECH_Corp/Intership/ethpriceoracle/contracts/EthPriceOracleInterface.sol",
     "exportedSymbols": {
       "EthPriceOracleInterface": [
         17
@@ -237,7 +237,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2022-01-20T08:11:01.562Z",
+  "updatedAt": "2022-01-24T03:58:56.081Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
