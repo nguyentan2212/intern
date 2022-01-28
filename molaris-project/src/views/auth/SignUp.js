@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -17,10 +18,22 @@ import { useMoralis } from "react-moralis";
 
 function SignUp() {
   const { signup } = useMoralis();
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+
+  const signupHandle = async () => {
+    try {
+      await signup(username, password, email, { throwOnError: true });
+      alert("Signup successed");
+      navigate("/");
+    } catch (e) {
+      alert("Signup failed");
+      console.log(e);
+    }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -49,7 +62,7 @@ function SignUp() {
                 id="userName"
                 label="User Name"
                 autoFocus
-                onChange={e => setUsername(e.target.value)}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -60,7 +73,7 @@ function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -72,7 +85,7 @@ function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="new-password"
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -82,12 +95,17 @@ function SignUp() {
               />
             </Grid>
           </Grid>
-          <Button type="button" onClick={() => signup(username, password, email)} fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+          <Button
+            type="button"
+            onClick={signupHandle}
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}>
             Sign Up
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/auth/signin" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
