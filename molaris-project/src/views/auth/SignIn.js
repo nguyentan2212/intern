@@ -17,7 +17,7 @@ import { LockOutlined } from "@mui/icons-material";
 import { useMoralis } from "react-moralis";
 
 function SignIn() {
-  const { login, error } = useMoralis();
+  const { login } = useMoralis();
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
@@ -87,13 +87,13 @@ function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href="/auth/resetpassword" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
               <Link href="/auth/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
+                Don't have an account? Sign Up
               </Link>
             </Grid>
           </Grid>
