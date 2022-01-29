@@ -1,6 +1,19 @@
-import React from "react";
-import { AppBar, styled, Toolbar, IconButton, Typography, Badge } from "@mui/material";
-import { Menu, Notifications } from "@mui/icons-material";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  AppBar,
+  styled,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  MenuItem,
+  Box,
+  Button
+} from "@mui/material";
+import { AccountCircle } from "@mui/icons-material";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useMoralis } from "react-moralis";
 
 const StyledAppBar = styled(AppBar, {
   shouldForwardProp: (prop) => prop !== "open" && prop !== "drawerWidth"
@@ -22,7 +35,17 @@ const StyledAppBar = styled(AppBar, {
 
 function CAppBar(props) {
   const { drawerWidth, open, toggleDrawer } = props;
-  
+  const { user, logout } = useMoralis();
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const menuOpen = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <StyledAppBar position="absolute" open={open} drawerWidth={drawerWidth}>
       <Toolbar
@@ -38,16 +61,34 @@ function CAppBar(props) {
             marginRight: "36px",
             ...(open && { display: "none" })
           }}>
-          <Menu />
+          <MenuIcon />
         </IconButton>
         <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
           Dashboard
         </Typography>
-        <IconButton color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <Notifications />
-          </Badge>
-        </IconButton>
+        {user ? (
+          <Box component="div">
+            <IconButton color="inherit" onClick={handleClick}>
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={menuOpen}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button"
+              }}>
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={() => logout()}>Logout</MenuItem>
+            </Menu>
+          </Box>
+        ) : (
+          <Button color="inherit" onClick={() => navigate("/auth/signin")}>
+            Login
+          </Button>
+        )}
       </Toolbar>
     </StyledAppBar>
   );
