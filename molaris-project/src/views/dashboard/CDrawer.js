@@ -46,7 +46,7 @@ function CDrawer(props) {
         </IconButton>
       </Toolbar>
       <Divider />
-      <List>
+      <List sx={{ height: "100vh" }}>
         <ListItems />
       </List>
     </StyledDrawer>
