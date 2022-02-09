@@ -14,6 +14,7 @@ import {
 import { AccountCircle } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useMoralis } from "react-moralis";
+import Swal from "sweetalert2";
 
 const StyledAppBar = styled(AppBar, {
   shouldForwardProp: (prop) => prop !== "open" && prop !== "drawerWidth"
@@ -35,7 +36,8 @@ const StyledAppBar = styled(AppBar, {
 
 function CAppBar(props) {
   const { drawerWidth, open, toggleDrawer } = props;
-  const { user, logout } = useMoralis();
+  const { user, logout, authenticate, isAuthenticated, isLoggingOut, Moralis, account } =
+    useMoralis();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const menuOpen = Boolean(anchorEl);
@@ -45,6 +47,26 @@ function CAppBar(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const mergeAccount = (acc) => {
+    Swal.fire({
+      title: "Do you want to merge?",
+      showCancelButton: true
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        console.log("Merge account");
+        try {
+          await Moralis.link(acc);
+        } catch (e) {
+          Swal.fire("Error", e.message, "error");
+        }
+      }
+    });
+  };
+
+  Moralis.onAccountChanged((acc) => {
+    mergeAccount(acc);
+  });
 
   return (
     <StyledAppBar position="absolute" open={open} drawerWidth={drawerWidth}>
@@ -72,6 +94,7 @@ function CAppBar(props) {
               <AccountCircle />
             </IconButton>
             <Menu
+              sx={{ width: "200px" }}
               id="basic-menu"
               anchorEl={anchorEl}
               open={menuOpen}
@@ -81,13 +104,32 @@ function CAppBar(props) {
               }}>
               <MenuItem onClick={handleClose}>Profile</MenuItem>
               <MenuItem onClick={handleClose}>My account</MenuItem>
-              <MenuItem onClick={() => logout()}>Logout</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  mergeAccount(account);
+                }}>
+                Merge Account
+              </MenuItem>
+              <MenuItem>{user ? user.get("username") : "null"}</MenuItem>
+              <MenuItem onClick={logout}>Logout</MenuItem>
             </Menu>
           </Box>
         ) : (
-          <Button color="inherit" onClick={() => navigate("/auth/signin")}>
-            Login
-          </Button>
+          <Box component="div" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            <Button
+              color="inherit"
+              onClick={() => {
+                handleClose();
+                authenticate();
+              }}>
+              Connect wallet
+            </Button>
+            <Typography sx={{ mx: "10px" }}>or</Typography>
+            <Button color="inherit" onClick={() => navigate("/auth/signin")}>
+              Login
+            </Button>
+          </Box>
         )}
       </Toolbar>
     </StyledAppBar>
