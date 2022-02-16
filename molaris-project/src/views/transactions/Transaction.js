@@ -1,43 +1,82 @@
-import React, { useEffect } from "react";
-import { Box, Button } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { useNativeTransactions } from "react-moralis";
+import React, { useEffect, useState } from "react";
+import { Box, Tab, TextField } from "@mui/material";
+import { TabContext, TabList, TabPanel, LoadingButton } from "@mui/lab/";
+import { useNativeTransactions, useERC20Transfers, useNFTTransfers } from "react-moralis";
+import NativeTransaction from "./NativeTransaction";
+import ERC20Transfer from "./ERC20Transfer";
+import NFTTransfer from "./NFTTransfer";
 
 function Transaction({ setTitle }) {
-  const { getNativeTransations, data, isLoading } = useNativeTransactions();
+  const [value, setValue] = useState("0");
+  const { getNativeTransations, data: nativeData, isFetching: nativeFetching } = useNativeTransactions();
+  const { fetchERC20Transfers, data: ERC20Data, isFetching: ERC20Fetching } = useERC20Transfers();
+  const { getNFTTransfers, data: NFTData, isFetching: NFTFetching } = useNFTTransfers();
+  const [userAddress, setUserAddress] = useState("");
 
   useEffect(() => {
     setTitle("Transactions");
-    getNativeTransations({
-      params: { address: "0x7e576E3FFdFf96581f035B29B2E084299b72900c" },
-    });
-  },[getNativeTransations, setTitle]);
+    getNativeTransations();
+    fetchERC20Transfers();
+    getNFTTransfers();
+  }, [getNativeTransations, fetchERC20Transfers, getNFTTransfers, setTitle]);
 
-  const load = async () => {
-    await getNativeTransations({
-      params: { address: "0x7e576E3FFdFf96581f035B29B2E084299b72900c" },
-    });
-    console.log(data);
+  const fetchData = () => {
+    if (userAddress) {
+      getNativeTransations({ params: { address: userAddress } });
+      fetchERC20Transfers({ params: { address: userAddress } });
+      getNFTTransfers({ params: { address: userAddress } });
+    } else {
+      getNativeTransations();
+      fetchERC20Transfers();
+      getNFTTransfers();
+    }
   };
-
-  const columns = [
-    { field: "hash", headerName: "Hash", width: 200 },
-    { field: "from_address", headerName: "From", width: 250 },
-    { field: "to_address", headerName: "To", width: 250 },
-    { field: "value", headerName: "Value", width: 150 },
-    { field: "block_timestamp", headerName: "Time", width: 200 },
-  ];
 
   return (
     <Box sx={{ padding: "10px", width: "100%", height: "100%" }}>
-      <Button onClick={load}>Refresh</Button>
-      {data && data.result && !isLoading && (
-        <DataGrid
-          rows={data.result}
-          columns={columns}
-          getRowId={(row) => row.hash}
-        />
-      )}
+      <Box
+        sx={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "flex-end",
+          marginBottom: "10px",
+        }}
+      >
+        <TextField
+          sx={{ width: "300px" }}
+          variant="outlined"
+          size="small"
+          value={userAddress}
+          onChange={(e) => setUserAddress(e.target.value)}
+        ></TextField>
+        <LoadingButton
+          sx={{ marginLeft: "5px" }}
+          loading={nativeFetching || ERC20Fetching || NFTFetching}
+          onClick={fetchData}
+          loadingIndicator="Loading..."
+          variant="outlined"
+        >
+          Fetch data
+        </LoadingButton>
+      </Box>
+      <TabContext value={value}>
+        <Box sx={{ width: "100%" }}>
+          <TabList onChange={(e, val) => setValue(val)} aria-label="transactions">
+            <Tab label="Native" value="0" />
+            <Tab label="ERC-20" value="1" />
+            <Tab label="NFT" value="2" />
+          </TabList>
+        </Box>
+        <TabPanel value="0">
+          <NativeTransaction data={nativeData} />
+        </TabPanel>
+        <TabPanel value="1">
+          <ERC20Transfer data={ERC20Data} />
+        </TabPanel>
+        <TabPanel value="2">
+          <NFTTransfer data={NFTData} />
+        </TabPanel>
+      </TabContext>
     </Box>
   );
 }
